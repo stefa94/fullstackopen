@@ -2,26 +2,19 @@ const http = require('http')
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const mongoose = require('mongoose')
+const Blog = require('./models/blogs')
+require('dotenv').config()
 
-//Dependencias de desarroyo
+
+//Dependencias de desarroyo.
 const morgan = require("morgan")
 
-const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number
-})
 
-const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl)
-
+app.use(morgan('tiny'))
 app.use(cors())
 app.use(express.json())
-
+// do
 app.get('/api/blogs', (request, response) => {
   Blog
     .find({})
@@ -29,7 +22,7 @@ app.get('/api/blogs', (request, response) => {
       response.json(blogs)
     })
 })
-
+// do
 app.post('/api/blogs', (request, response) => {
   const blog = new Blog(request.body)
 
